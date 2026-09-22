@@ -3,3 +3,6 @@
 *.scss
 **/dist
 **/sets
+.parcel-cache
+coverage
+package-lock.json

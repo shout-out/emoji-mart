@@ -26,12 +26,12 @@ Data required for the picker to work has been completely decoupled from the libr
 - **Cons:** Slower initial page load (bigger file to load)
 
 ```sh
-yarn add @emoji-mart/data
+yarn add @agilemile/emoji-mart-data
 ```
 
 ```js
-import data from '@emoji-mart/data'
-import { Picker } from 'emoji-mart'
+import data from '@agilemile/emoji-mart-data'
+import { Picker } from '@agilemile/emoji-mart'
 
 new Picker({ data })
 ```
@@ -41,11 +41,11 @@ new Picker({ data })
 - **Cons:** Network latency, doesn’t work offline (unless you configure a ServiceWorker)
 
 ```js
-import { Picker } from 'emoji-mart'
+import { Picker } from '@agilemile/emoji-mart'
 new Picker({
   data: async () => {
     const response = await fetch(
-      'https://cdn.jsdelivr.net/npm/@emoji-mart/data',
+      'https://cdn.jsdelivr.net/npm/@agilemile/emoji-mart-data',
     )
 
     return response.json()
@@ -58,12 +58,12 @@ In this example data is fetched from a content delivery network, but it could al
 ## 🏪 Picker
 ### React
 ```sh
-npm install --save emoji-mart @emoji-mart/data @emoji-mart/react
+npm install --save @agilemile/emoji-mart @agilemile/emoji-mart-data @agilemile/emoji-mart-react
 ```
 
 ```js
-import data from '@emoji-mart/data'
-import Picker from '@emoji-mart/react'
+import data from '@agilemile/emoji-mart-data'
+import Picker from '@agilemile/emoji-mart-react'
 
 function App() {
   return (
@@ -100,7 +100,7 @@ function App() {
 | **emojiButtonRadius** | `100%` | i.e. `6px`, `1em`, `100%` | The radius of the emoji buttons |
 | **emojiButtonSize** | `36` | | The size of the emoji buttons |
 | **emojiSize** | `24` | | The size of the emojis (inside the buttons) |
-| **emojiVersion** | `14` | `1`, `2`, `3`, `4`, `5`, `11`, `12`, `12.1`, `13`, `13.1`, `14` | The version of the emoji data to use. Latest version supported in `@emoji-mart/data` is currently [14](https://emojipedia.org/emoji-14.0) |
+| **emojiVersion** | `14` | `1`, `2`, `3`, `4`, `5`, `11`, `12`, `12.1`, `13`, `13.1`, `14` | The version of the emoji data to use. Latest version supported in `@agilemile/emoji-mart-data` is currently [14](https://emojipedia.org/emoji-14.0) |
 | **exceptEmojis** | `[]` | | List of emoji IDs that will be excluded from the picker |
 | **icons** | `auto` | `auto`, `outline`, `solid` | The type of icons to use for the picker. `outline` with light theme and `solid` with dark theme. |
 | **locale** | `en` | `en`, `ar`, `be`, `cs`, `de`, `es`, `fa`, `fi`, `fr`, `hi`, `it`, `ja`, `ko`, `nl`, `pl`, `pt`, `ru`, `sa`, `tr`, `uk`, `vi`, `zh` | The locale to use for the picker |
@@ -122,8 +122,8 @@ function App() {
 You can use custom emojis by providing an array of categories and their emojis. Emojis also support multiple skin tones and can be GIFs or SVGs.
 
 ```js
-import data from '@emoji-mart/data'
-import Picker from '@emoji-mart/react'
+import data from '@agilemile/emoji-mart-data'
+import Picker from '@agilemile/emoji-mart-react'
 
 const custom = [
   {
@@ -190,8 +190,8 @@ The emoji web component usage is the same no matter what library you use.
 First, you need to make sure data has been initialized. You need to call this only once per page load. Note that if you call `init` like this, you don’t necessarily need to include data in your Picker props. It doesn’t hurt either, it will noop.
 
 ```js
-import data from '@emoji-mart/data'
-import { init } from 'emoji-mart'
+import data from '@agilemile/emoji-mart-data'
+import { init } from '@agilemile/emoji-mart'
 
 init({ data })
 ```
@@ -220,8 +220,8 @@ Then you can use the emoji component in your HTML / JSX.
 You can search without the Picker. Just like the emoji component, `data` needs to be initialized first in order to use the search index.
 
 ```js
-import data from '@emoji-mart/data'
-import { init, SearchIndex } from 'emoji-mart'
+import data from '@agilemile/emoji-mart-data'
+import { init, SearchIndex } from '@agilemile/emoji-mart'
 
 init({ data })
 
@@ -241,8 +241,8 @@ search('christmas') // => ['🎄', '🇨🇽', '🧑‍🎄', '🔔', '🤶', '�
 You can get emoji data from a native emoji. This is useful if you want to get the emoji ID from a native emoji. Just like the emoji component, `data` needs to be initialized first in order to retrieve the emoji data.
 
 ```js
-import data from '@emoji-mart/data'
-import { init, getEmojiDataFromNative } from 'emoji-mart'
+import data from '@agilemile/emoji-mart-data'
+import { init, getEmojiDataFromNative } from '@agilemile/emoji-mart'
 
 init({ data })
 
@@ -263,7 +263,7 @@ getEmojiDataFromNative('🤞🏿').then(console.log)
 EmojiMart UI supports [multiple languages](https://github.com/missive/emoji-mart/tree/main/packages/emoji-mart-data/i18n), feel free to open a PR if yours is missing.
 
 ```js
-import i18n from '@emoji-mart/data/i18n/fr.json'
+import i18n from '@agilemile/emoji-mart-data/i18n/fr.json'
 i18n.search_no_results_1 = 'Aucun emoji'
 
 new Picker({ i18n })
@@ -288,7 +288,140 @@ EmojiMart relies on these APIs, you may need to include polyfills if you need to
 - [Async/Await](https://caniuse.com/async-functions) ([MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/async_function))
 
 ## 🛠 Development
+
+This repository is a **monorepo**: one Git repository that contains several npm packages, managed with [npm workspaces](https://docs.npmjs.com/cli/using-npm/workspaces).
+
+### Prerequisites
+
+- **Node.js 18 or newer.** Node 24 is known to work and is the version pinned in `.node-version`. [nvm](https://github.com/nvm-sh/nvm) is a convenient way to install and switch Node versions; it reads `.node-version` automatically if you run `nvm use`.
+- **npm 7 or newer.** npm ships with Node, so nothing extra to install. Check with `npm --version`.
+
+### Repository layout
+
+| Directory | Published as | What it is |
+| --- | --- | --- |
+| `packages/emoji-mart` | `@agilemile/emoji-mart` | The core picker. Written in TypeScript with Preact, compiled to a framework-free web component. |
+| `packages/emoji-mart-data` | `@agilemile/emoji-mart-data` | The emoji JSON datasets and i18n files. Generated by a build script, not hand-edited. |
+| `packages/emoji-mart-react` | `@agilemile/emoji-mart-react` | A thin React wrapper around the core picker. |
+| `packages/emoji-mart-website` | not published | The demo and examples site. This is what `npm run dev` serves. |
+
+Inside `packages/emoji-mart/src`:
+
+| Path | Purpose |
+| --- | --- |
+| `index.ts` | Public entry point. Everything exported here is the package's API. |
+| `browser.js` | Entry point for the standalone `dist/browser.js` bundle used via `<script>` tags. |
+| `config.ts` | `init()`, data loading, and default option handling. |
+| `components/` | Preact components: `Picker`, `Emoji`, `Navigation`, and the custom-element wrappers in `HTMLElement/`. |
+| `helpers/` | Search index, frequently-used tracking, native emoji support detection, local storage. |
+| `__tests__/` and `helpers/__tests__/` | Jest tests. |
+
+npm workspaces symlink each package into `node_modules/@agilemile/`. That means the website and the React wrapper always import your local, in-progress code rather than a copy from npm.
+
+### Getting started
+
 ```sh
-yarn install
-yarn dev
+git clone https://github.com/shout-out/emoji-mart.git
+cd emoji-mart
+npm install
+npm run dev
 ```
+
+`npm install` is run **once, from the repository root**, and installs dependencies for every package. `npm run dev` starts the demo site at [http://localhost:1234](http://localhost:1234) with hot reload. Edit anything under `packages/emoji-mart/src` and the page updates.
+
+### Everyday commands
+
+All of these run from the repository root.
+
+| Command | What it does |
+| --- | --- |
+| `npm run dev` | Start the demo site with hot reload. |
+| `npm test` | Run the Jest test suite. Add `-- --watch` to re-run on change, or a filename fragment such as `npm test -- search-index` to run one file. |
+| `npm run check:types` | Type-check the whole repo with TypeScript. |
+| `npm run prettier` | Check formatting. `npm run prettier:fix` rewrites files to match. |
+| `npm run build` | Build the core package into `packages/emoji-mart/dist`. |
+| `npm run build:react` | Build the React wrapper into `packages/emoji-mart-react/dist`. |
+| `npm run build:data` | Regenerate the emoji datasets (see below). |
+| `npm run build:website` | Build the static demo site. |
+
+The `dist` folders and `.parcel-cache` are gitignored. You only need to build when you want to publish or inspect the output; the dev server builds on the fly.
+
+### Working with workspaces
+
+A dependency belongs to a specific package, so tell npm which one you mean with `-w`:
+
+```sh
+# Add a runtime dependency to the core package
+npm install some-pkg -w @agilemile/emoji-mart
+
+# Add a dev-only dependency to the core package
+npm install -D some-pkg -w @agilemile/emoji-mart
+
+# Run a package's own script
+npm run build -w @agilemile/emoji-mart-react
+```
+
+Dev tooling shared by all packages (Parcel, Jest, TypeScript, Prettier) lives in the root `package.json` and is added with a plain `npm install -D some-pkg` from the root.
+
+Always commit `package-lock.json` when it changes. It records the exact dependency versions that CI and other developers will install.
+
+Two root pins exist on purpose. `@parcel/core` is pinned to match `parcel` because npm otherwise installs a second, newer copy to satisfy a plugin's peer dependency, and Parcel fails with "Expected constructor ... BundleGraph to be registered with serializer". The `types: []` setting in `tsconfig.json` stops TypeScript 4.6 from loading newer `@types/*` packages it cannot parse.
+
+### Regenerating the emoji data
+
+The JSON under `packages/emoji-mart-data/sets` is generated from the `emoji-datasource`, `emojilib`, and `unicode-emoji-json` packages by `packages/emoji-mart-data/build.js`. To pick up a new Unicode emoji release:
+
+1. Bump those three dependencies in `packages/emoji-mart-data/package.json` and run `npm install`.
+2. Add the new version number to the `VERSIONS` array in `build.js`.
+3. Point the `main` field in `packages/emoji-mart-data/package.json` at the new `sets/<version>/native.json`.
+4. Run `npm run build:data` and commit the regenerated files.
+
+### Publishing a release
+
+Publishing needs an npm account that belongs to the `agilemile` organization. Log in once with `npm login`.
+
+1. **Bump the version** in the package you changed. Scoped packages follow [semver](https://semver.org/): `patch` for fixes, `minor` for features, `major` for breaking changes.
+
+   ```sh
+   cd packages/emoji-mart
+   npm version patch --no-git-tag-version
+   ```
+
+   If you bump `@agilemile/emoji-mart`, also update the `peerDependencies` range in `packages/emoji-mart-react/package.json` and bump that package too.
+
+2. **Publish.** The `prepublishOnly` hook builds the package first, so no separate build step is needed. When several packages change, publish in this order: data, core, react.
+
+   ```sh
+   npm publish
+   ```
+
+   npm rejects a version that has already been published, so every publish needs a bump.
+
+3. **Verify and commit.**
+
+   ```sh
+   npm view @agilemile/emoji-mart version
+   git add -A && git commit -m "Release @agilemile/emoji-mart vX.Y.Z" && git push
+   ```
+
+   Freshly published packages can take a few minutes to show up in `npm view` or `npm install`. A 404 right after publishing is normal.
+
+### Troubleshooting
+
+- **`npm warn install-scripts ... not yet covered by allowScripts`** on npm 11: informational. Parcel and its native helpers ship prebuilt binaries, so skipping their install scripts is fine.
+- **`Bad CPU type in executable` from `term-size`** on Apple Silicon: harmless, an optional dependency ships an Intel-only binary.
+- **`Browserslist: caniuse-lite is outdated`**: harmless. Silence it with `npx browserslist@latest --update-db`.
+- **Node `DeprecationWarning: url.parse()`**: harmless, comes from Parcel 2.6 on newer Node versions.
+- **A build fails for no clear reason**, or an edit is not picked up: clear the caches and retry.
+
+  ```sh
+  rm -rf .parcel-cache packages/*/dist
+  npm run build
+  ```
+
+- **Dependencies look wrong** after switching branches or editing `package.json`: reinstall from the lockfile.
+
+  ```sh
+  rm -rf node_modules
+  npm ci
+  ```
