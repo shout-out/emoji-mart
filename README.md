@@ -387,9 +387,9 @@ The JSON under `packages/emoji-mart-data/sets` is generated from the `emoji-data
 
 ### Publishing a release
 
-Publishing needs an npm account that belongs to the `agilemile` organization. Log in once with `npm login`.
+Releases are published by the **Publish to npm** GitHub Actions workflow, not from a laptop. Publishing a GitHub Release triggers it; it publishes every package whose version in `package.json` is not yet on npm, in the order data, core, react, with provenance attestations. It uses npm trusted publishing, so no npm token is stored anywhere.
 
-1. **Bump the version** in the package you changed. Scoped packages follow [semver](https://semver.org/): `patch` for fixes, `minor` for features, `major` for breaking changes.
+1. **Bump the version** in each package you changed, on a branch. Scoped packages follow [semver](https://semver.org/): `patch` for fixes, `minor` for features, `major` for breaking changes.
 
    ```sh
    cd packages/emoji-mart
@@ -398,22 +398,27 @@ Publishing needs an npm account that belongs to the `agilemile` organization. Lo
 
    If you bump `@agilemile/emoji-mart`, also update the `peerDependencies` range in `packages/emoji-mart-react/package.json` and bump that package too.
 
-2. **Publish.** The `prepublishOnly` hook builds the package first, so no separate build step is needed. When several packages change, publish in this order: data, core, react.
+2. **Open a pull request** with the bumps and merge it once CI passes. `main` is protected, so this is the only way changes land.
+
+3. **Publish a GitHub Release** from `main`, tagged with the version:
 
    ```sh
-   npm publish
+   gh release create v0.2.0 --title "v0.2.0" --generate-notes
    ```
 
-   npm rejects a version that has already been published, so every publish needs a bump.
+   Or use the Releases page on GitHub with "Draft a new release". The workflow starts when the release is published, not while it is a draft.
 
-3. **Verify and commit.**
+4. **Watch the run** under the Actions tab. When it finishes, confirm on npm:
 
    ```sh
    npm view @agilemile/emoji-mart version
-   git add -A && git commit -m "Release @agilemile/emoji-mart vX.Y.Z" && git push
    ```
 
    Freshly published packages can take a few minutes to show up in `npm view` or `npm install`. A 404 right after publishing is normal.
+
+**First-time setup.** Each package must list this repository as a trusted publisher on npmjs.com: open the package's page, go to Settings, then Trusted Publishers, and add GitHub Actions with repository `shout-out/emoji-mart` and workflow filename `publish.yml`. Without this the workflow fails at the upload step.
+
+**Manual fallback.** If the workflow is unavailable, a maintainer who belongs to the `agilemile` npm organization can run `npm publish` inside each package directory after `npm login`. Publish in the same order (data, core, react). npm will prompt for a one-time password on each publish.
 
 ### Troubleshooting
 
