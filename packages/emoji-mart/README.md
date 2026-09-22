@@ -6,6 +6,12 @@
   <br>Brought to you by the <a title="Team email, team chat, team tasks, one app" href="https://missiveapp.com">Missive</a> team
 </div>
 
+<p align="center">
+  <a href="https://github.com/shout-out/emoji-mart/actions/workflows/ci.yml"><img alt="CI" src="https://github.com/shout-out/emoji-mart/actions/workflows/ci.yml/badge.svg"></a>
+  <a href="https://www.npmjs.com/package/@agilemile/emoji-mart"><img alt="npm" src="https://img.shields.io/npm/v/@agilemile/emoji-mart"></a>
+  <a href="LICENSE"><img alt="MIT license" src="https://img.shields.io/badge/license-MIT-blue.svg"></a>
+</p>
+
 ## 📖 Table of Contents
 - [💾 Data](#-data)
 - [🏪 Picker](#-picker)
@@ -16,6 +22,7 @@
 - [📚 Examples](#-examples)
 - [🤓 Built for modern browsers](#-built-for-modern-browsers)
 - [🛠 Development](#-development)
+- [🤝 Contributing](#-contributing)
 
 ## 💾 Data
 
@@ -286,6 +293,10 @@ EmojiMart relies on these APIs, you may need to include polyfills if you need to
 - [Custom elements](https://caniuse.com/custom-elementsv1) ([MDN](https://developer.mozilla.org/en-US/docs/Web/Web_Components/Using_custom_elements))
 - [IntersectionObserver](https://caniuse.com/intersectionobserver) ([MDN](https://developer.mozilla.org/en-US/docs/Web/API/Intersection_Observer_API))
 - [Async/Await](https://caniuse.com/async-functions) ([MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/async_function))
+
+## 🤝 Contributing
+
+Bug reports, feature requests, and pull requests are welcome. Please read [CONTRIBUTING.md](CONTRIBUTING.md) for the process and [SECURITY.md](SECURITY.md) for how to report vulnerabilities privately.
 
 ## 🛠 Development
 
