@@ -7,7 +7,7 @@
     "build": "parcel build index.html --no-autoinstall --public-url https://missiveapp.com/open/emoji-mart --dist-dir emoji-mart"
   },
   "devDependencies": {
-    "posthtml-extend": "0.6.2",
-    "posthtml-include": "1.7.2"
+    "posthtml-extend": "0.6.5",
+    "posthtml-include": "2.0.1"
   }
 }

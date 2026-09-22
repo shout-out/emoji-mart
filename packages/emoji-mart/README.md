@@ -100,7 +100,7 @@ function App() {
 | **emojiButtonRadius** | `100%` | i.e. `6px`, `1em`, `100%` | The radius of the emoji buttons |
 | **emojiButtonSize** | `36` | | The size of the emoji buttons |
 | **emojiSize** | `24` | | The size of the emojis (inside the buttons) |
-| **emojiVersion** | `14` | `1`, `2`, `3`, `4`, `5`, `11`, `12`, `12.1`, `13`, `13.1`, `14` | The version of the emoji data to use. Latest version supported in `@agilemile/emoji-mart-data` is currently [14](https://emojipedia.org/emoji-14.0) |
+| **emojiVersion** | `16` | `1`, `2`, `3`, `4`, `5`, `11`, `12`, `12.1`, `13`, `13.1`, `14`, `15`, `16` | The version of the emoji data to use. Latest version supported in `@agilemile/emoji-mart-data` is currently [16](https://emojipedia.org/emoji-16.0) |
 | **exceptEmojis** | `[]` | | List of emoji IDs that will be excluded from the picker |
 | **icons** | `auto` | `auto`, `outline`, `solid` | The type of icons to use for the picker. `outline` with light theme and `solid` with dark theme. |
 | **locale** | `en` | `en`, `ar`, `be`, `cs`, `de`, `es`, `fa`, `fi`, `fr`, `hi`, `it`, `ja`, `ko`, `nl`, `pl`, `pt`, `ru`, `sa`, `tr`, `uk`, `vi`, `zh` | The locale to use for the picker |
@@ -365,8 +365,6 @@ Dev tooling shared by all packages (Parcel, Jest, TypeScript, Prettier) lives in
 
 Always commit `package-lock.json` when it changes. It records the exact dependency versions that CI and other developers will install.
 
-Two root pins exist on purpose. `@parcel/core` is pinned to match `parcel` because npm otherwise installs a second, newer copy to satisfy a plugin's peer dependency, and Parcel fails with "Expected constructor ... BundleGraph to be registered with serializer". The `types: []` setting in `tsconfig.json` stops TypeScript 4.6 from loading newer `@types/*` packages it cannot parse.
-
 ### Regenerating the emoji data
 
 The JSON under `packages/emoji-mart-data/sets` is generated from the `emoji-datasource`, `emojilib`, and `unicode-emoji-json` packages by `packages/emoji-mart-data/build.js`. To pick up a new Unicode emoji release:
@@ -411,7 +409,6 @@ Publishing needs an npm account that belongs to the `agilemile` organization. Lo
 - **`npm warn install-scripts ... not yet covered by allowScripts`** on npm 11: informational. Parcel and its native helpers ship prebuilt binaries, so skipping their install scripts is fine.
 - **`Bad CPU type in executable` from `term-size`** on Apple Silicon: harmless, an optional dependency ships an Intel-only binary.
 - **`Browserslist: caniuse-lite is outdated`**: harmless. Silence it with `npx browserslist@latest --update-db`.
-- **Node `DeprecationWarning: url.parse()`**: harmless, comes from Parcel 2.6 on newer Node versions.
 - **A build fails for no clear reason**, or an edit is not picked up: clear the caches and retry.
 
   ```sh

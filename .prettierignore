@@ -6,3 +6,4 @@
 .parcel-cache
 coverage
 package-lock.json
+packages/emoji-mart-website/emoji-mart
